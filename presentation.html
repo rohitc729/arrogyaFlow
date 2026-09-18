@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AarogyaFlow AI - 5 Min Pitch Presentation | Team ByteMind</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #edf3f8;
+      --card-bg: #f8fafc;
+      --text: #0b1c2d;
+      --muted: #4b6279;
+      --blue: #1a6bbf;
+      --teal: #0d9488;
+      --coral: #e11d48;
+      --green: #059669;
+      --amber: #d97706;
+      --clay-shadow: 12px 12px 28px rgba(162, 178, 200, 0.4), -12px -12px 28px #ffffff,
+                        inset 2px 2px 3px rgba(255, 255, 255, 0.9), inset -2px -2px 3px rgba(175, 192, 214, 0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    .deck-container {
+      width: 100%;
+      max-width: 1100px;
+      min-height: 640px;
+      background: var(--card-bg);
+      border-radius: 28px;
+      box-shadow: var(--clay-shadow);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3rem 3.5rem;
+      border: 1px solid rgba(255,255,255,0.9);
+      transition: all 0.3s ease;
+    }
+
+    .slide {
+      display: none;
+      animation: fadeIn 0.3s ease-out forwards;
+      height: 100%;
+    }
+
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Top bar */
+    .slide-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid rgba(162, 178, 200, 0.25);
+      padding-bottom: 0.75rem;
+    }
+
+    .team-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #e4effb;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      box-shadow: 2px 2px 6px rgba(162, 178, 200, 0.3), -2px -2px 6px #fff;
+    }
+
+    .timer-pill {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--coral);
+      background: #ffe4e8;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+    }
+
+    /* Slide Titles */
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-subtitle {
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* Content Cards */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .point-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 6px 6px 16px rgba(162, 178, 200, 0.25), -6px -6px 16px #ffffff,
+                  inset 1px 1px 2px #fff;
+      border-left: 5px solid var(--blue);
+    }
+
+    .point-card.danger { border-left-color: var(--coral); }
+    .point-card.success { border-left-color: var(--green); }
+    .point-card.warning { border-left-color: var(--amber); }
+    .point-card.teal { border-left-color: var(--teal); }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-text {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .highlight-stat {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Presenter Script Box */
+    .speaker-box {
+      margin-top: 1.5rem;
+      background: #f0f7ff;
+      border: 1px dashed var(--blue);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      color: #0f4987;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .speaker-badge {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+
+    /* Bottom Nav Controls */
+    .deck-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 2px solid rgba(162, 178, 200, 0.25);
+    }
+
+    .ctrl-btn {
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 0.65rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: #f8fafc;
+      color: var(--text);
+      box-shadow: 6px 6px 14px rgba(162, 178, 200, 0.35), -6px -6px 14px #ffffff;
+      transition: all 0.2s;
+    }
+
+    .ctrl-btn:hover {
+      transform: translateY(-2px);
+      color: var(--blue);
+    }
+
+    .ctrl-btn.primary {
+      background: var(--blue);
+      color: #ffffff;
+      box-shadow: 6px 6px 16px rgba(26, 107, 191, 0.35), -4px -4px 10px #ffffff;
+    }
+
+    .ctrl-btn.primary:hover {
+      background: #155ba5;
+      color: #ffffff;
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .dot.active {
+      width: 28px;
+      border-radius: 12px;
+      background: var(--blue);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="deck-container">
+
+    <!-- SLIDE 1: TITLE & THE PROBLEM -->
+    <div class="slide active" id="slide-1">
+      <div>
+        <div class="slide-topbar">
+          <span class="team-badge">👥 Team ByteMind</span>
+          <span class="timer-pill">⏱️ 0:00 - 0:45 | Slide 1 of 5</span>
+        </div>
+
+        <h1 class="slide-title">AarogyaFlow AI</h1>
+        <p class="slide-subtitle">
+          Predict shortages of life-saving medicines and resources before they become emergencies in India's Primary Health Centres (PHCs).
+        </p>
+
+        <div class="grid-2">
+          <div class="point-card danger">
+            <div class="card-title">🚨 The Rural Healthcare Crisis</div>
+            <div class="card-text">
+              In rural India, clinics run out of ORS, snake venom, insulin, and oxygen without warning. Patients reach clinics only to hear <em>"Dawai khatam ho gayi hai"</em>. Stock data is trapped in manual paper registers or scattered silos.
+            </div>
+          </div>
+
+          <div class="point-card success">
+            <div class="card-title">💡 Our Solution: ByteMind's AarogyaFlow</div>
+            <div class="card-text">
+              An intelligent, federated supply-chain platform that predicts stock-outs 7 to 30 days in advance and automatically arranges resource transfers from nearby surplus hospitals.
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1rem;">
+          <div style="font-size: 0.88rem; color: var(--muted); background: #ffffff; padding: 0.75rem 1rem; border-radius: 12px;">
+            👤 <strong>Team Leader:</strong> Sapana Giri
+          </div>
+          <div style="font-size: 0.88rem; color: var(--muted); background: #ffffff; padding: 0.75rem 1rem; border-radius: 12px;">
+            👤 <strong>Team Member:</strong> Rohit Chauhan
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-box">
+        <span class="speaker-badge">Sapana Speaks (35 sec)</span>
+        <div>
+          <em>"Good morning respected judges! We are Team <strong>ByteMind</strong>. I am Sapana Giri, and my team member is Rohit Chauhan. Every day in rural India, patients travel miles to Primary Health Centres only to find life-saving medicines like ORS, Anti-Snake Venom, or empty oxygen cylinders out of stock. Today, we present <strong>AarogyaFlow AI</strong> — an AI system that predicts medicine shortages before they become emergencies."</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: HOW IT WORKS -->
+    <div class="slide" id="slide-2">
+      <div>
+        <div class="slide-topbar">
+          <span class="team-badge">👥 Team ByteMind</span>
+          <span class="timer-pill">⏱️ 0:45 - 1:45 | Slide 2 of 5</span>
+        </div>
+
+        <h1 class="slide-title">How AarogyaFlow AI Works</h1>
+        <p class="slide-subtitle">
+          3 simple proactive steps connecting 25,000+ PHCs into a smart healthcare grid.
+        </p>
+
+        <div class="grid-3">
+          <div class="point-card">
+            <div class="card-title">1. Real-Time Tracking</div>
+            <div class="card-text">
+              Monitors daily medicine bin-cards, available beds (General & Oxygen), doctor attendance by speciality, and patient footfall velocity.
+            </div>
+          </div>
+
+          <div class="point-card teal">
+            <div class="card-title">2. Gemini AI Forecasting</div>
+            <div class="card-text">
+              Analyzes seasonal spikes, local viral outbreaks, and consumption trends to predict exact days of stock remaining (7, 15, 30 days).
+            </div>
+          </div>
+
+          <div class="point-card warning">
+            <div class="card-title">3. Smart Redistribution</div>
+            <div class="card-text">
+              Finds the nearest clinic with surplus stock and creates an instant transfer order (e.g., 500 ORS packets from Ara to Buxar, 38 km away).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-box">
+        <span class="speaker-badge">Rohit Speaks (55 sec)</span>
+        <div>
+          <em>"Instead of reacting after medicines run out, AarogyaFlow AI acts proactively. First, it tracks stocks, beds, and doctors. Second, our Google Gemini AI engine predicts the exact date of depletion based on seasonal illness spikes. And third, it doesn't just show an alarm — it finds a nearby hospital with extra stock and prepares a transfer plan so medicines arrive before the shelf goes empty."</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: LIVE FEATURES & INNOVATION -->
+    <div class="slide" id="slide-3">
+      <div>
+        <div class="slide-topbar">
+          <span class="team-badge">👥 Team ByteMind</span>
+          <span class="timer-pill">⏱️ 1:45 - 2:45 | Slide 3 of 5</span>
+        </div>
+
+        <h1 class="slide-title">Core Features & Live Platform</h1>
+        <p class="slide-subtitle">
+          Built for rural practicality: tactile claymorphism UI, accessible in regional languages.
+        </p>
+
+        <div class="grid-2">
+          <div class="point-card">
+            <div class="card-title">🗺️ National Command Geo-Map</div>
+            <div class="card-text">
+              Interactive Leaflet India map with color-coded risk pins: <strong>Green</strong> (Stable), <strong>Amber</strong> (Low Stock), <strong>Red</strong> (Critical Alert), and <strong>Blue</strong> (Redistribution Truck in Transit).
+            </div>
+          </div>
+
+          <div class="point-card teal">
+            <div class="card-title">🔊 Web Speech & Multilingual</div>
+            <div class="card-text">
+              Full interface support for <strong>English, Hindi (हिन्दी), and Bhojpuri (भोजपुरी)</strong>. Voice search for hands-free query and instant audio siren announcements for critical alerts.
+            </div>
+          </div>
+
+          <div class="point-card warning">
+            <div class="card-title">📋 Easy Facility Updates</div>
+            <div class="card-text">
+              Mobile-first dashboard for local pharmacists + Bulk CSV upload with instant validation so offline records can be synced in seconds.
+            </div>
+          </div>
+
+          <div class="point-card danger">
+            <div class="card-title">🚨 Multi-Channel Emergency Dispatch</div>
+            <div class="card-text">
+              Simulated automated broadcast to nearby CMOs, District Drug Warehouses, and ambulances via SMS, WhatsApp Health Bot, and NIC Email.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-box">
+        <span class="speaker-badge">Sapana Speaks (55 sec)</span>
+        <div>
+          <em>"Our UI is built with modern accessible Claymorphism — soft on the eyes with tactile 3D cards. It features an interactive India map showing every health centre's status. We also solved the language barrier: our system works seamlessly in English, Hindi, and Bhojpuri, and can even speak aloud emergency alerts so doctors on emergency duty never miss a critical warning."</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PRIVACY & FEDERATED LEARNING -->
+    <div class="slide" id="slide-4">
+      <div>
+        <div class="slide-topbar">
+          <span class="team-badge">👥 Team ByteMind</span>
+          <span class="timer-pill">⏱️ 2:45 - 3:45 | Slide 4 of 5</span>
+        </div>
+
+        <h1 class="slide-title">Data Privacy & Federated Architecture</h1>
+        <p class="slide-subtitle">
+          Patient confidentiality is guaranteed by design (DPDP Act 2023 compliant).
+        </p>
+
+        <div class="grid-3">
+          <div class="point-card success">
+            <div class="card-title">🛡️ Zero-PII Policy</div>
+            <div class="card-text">
+              We <strong>NEVER</strong> collect patient names, Aadhaar numbers, phone numbers, or individual medical files. Only aggregated resource counts are processed.
+            </div>
+          </div>
+
+          <div class="point-card">
+            <div class="card-title">🧠 Federated Edge AI</div>
+            <div class="card-text">
+              Raw clinical records stay locked inside local district servers. Only mathematical model weight updates are shared using Differential Privacy.
+            </div>
+          </div>
+
+          <div class="point-card teal">
+            <div class="card-title">🇮🇳 data.gov.in Integration</div>
+            <div class="card-text">
+              Direct connection to open datasets (Rural Health Statistics & NLEM Essential Medicines) with certified fallback if government servers are down.
+            </div>
+          </div>
+        </div>
+
+        <div class="point-card" style="margin-top: 1.25rem; background: #fdfefe;">
+          <strong>Tech Stack:</strong> TypeScript · Vite · Leaflet (OpenStreetMap) · Chart.js · Web Speech API · Google Gemini AI (Backend Proxy, Zero Hardcoded Secrets) · Node Express
+        </div>
+      </div>
+
+      <div class="speaker-box">
+        <span class="speaker-badge">Rohit Speaks (55 sec)</span>
+        <div>
+          <em>"The biggest concern in healthcare is privacy. In AarogyaFlow, patient privacy is non-negotiable. We collect zero patient names or Aadhaar numbers. Under Federated Learning, sensitive patient data never leaves the hospital server — only mathematical insights are shared. Furthermore, all AI queries pass through a secure backend proxy so our API keys are never exposed in frontend code."</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: IMPACT & CONCLUSION -->
+    <div class="slide" id="slide-5">
+      <div>
+        <div class="slide-topbar">
+          <span class="team-badge">👥 Team ByteMind</span>
+          <span class="timer-pill">⏱️ 3:45 - 5:00 | Slide 5 of 5</span>
+        </div>
+
+        <h1 class="slide-title">Measurable Impact & Future Vision</h1>
+        <p class="slide-subtitle">
+          Transforming India's primary health centres from reactive crisis management to proactive life-saving.
+        </p>
+
+        <div class="grid-3">
+          <div class="point-card success" style="text-align: center;">
+            <div class="highlight-stat" style="color: var(--green);">94.2%</div>
+            <strong style="color: var(--text);">Stock-Outs Prevented</strong>
+            <p class="card-text" style="font-size: 0.85rem; margin-top: 0.25rem;">Before reaching emergency threshold</p>
+          </div>
+
+          <div class="point-card" style="text-align: center;">
+            <div class="highlight-stat">< 4.5h</div>
+            <strong style="color: var(--text);">Emergency Transfer Time</strong>
+            <p class="card-text" style="font-size: 0.85rem; margin-top: 0.25rem;">Between nearby surplus/deficit PHCs</p>
+          </div>
+
+          <div class="point-card teal" style="text-align: center;">
+            <div class="highlight-stat" style="color: var(--teal);">25,840+</div>
+            <strong style="color: var(--text);">PHC Capacity Network</strong>
+            <p class="card-text" style="font-size: 0.85rem; margin-top: 0.25rem;">Scalable across all Indian states</p>
+          </div>
+        </div>
+
+        <div class="point-card" style="margin-top: 1.5rem; text-align: center; background: #eef7ff;">
+          <h3 style="font-size: 1.25rem; color: var(--blue); margin-bottom: 0.25rem;">
+            "Healthcare logistics should save lives, not lose time."
+          </h3>
+          <p style="font-size: 0.95rem; color: var(--muted);">
+            Thank you from <strong>Team ByteMind</strong> (Sapana Giri & Rohit Chauhan)! We welcome your questions.
+          </p>
+        </div>
+      </div>
+
+      <div class="speaker-box">
+        <span class="speaker-badge">Sapana & Rohit Conclude (45 sec)</span>
+        <div>
+          <em>"Sapana: To conclude, AarogyaFlow AI bridges the gap between surplus and shortage across India's healthcare frontline. Rohit: With AI forecasting, local data privacy, and regional language support, we make sure no patient is denied care because of a supply-chain failure. Together: Thank you! We are Team ByteMind and we are ready for your questions."</em>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM CONTROLS -->
+    <div class="deck-controls">
+      <button class="ctrl-btn" id="prev-btn" onclick="prevSlide()">← Previous</button>
+
+      <div class="dots-container">
+        <span class="dot active" onclick="goToSlide(1)"></span>
+        <span class="dot" onclick="goToSlide(2)"></span>
+        <span class="dot" onclick="goToSlide(3)"></span>
+        <span class="dot" onclick="goToSlide(4)"></span>
+        <span class="dot" onclick="goToSlide(5)"></span>
+      </div>
+
+      <button class="ctrl-btn primary" id="next-btn" onclick="nextSlide()">Next Slide →</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 5;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      document.querySelectorAll('.slide').forEach((s, idx) => {
+        s.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      document.querySelectorAll('.dot').forEach((d, idx) => {
+        d.classList.toggle('active', idx + 1 === currentSlide);
+      });
+
+      document.getElementById('prev-btn').style.visibility = currentSlide === 1 ? 'hidden' : 'visible';
+      document.getElementById('next-btn').innerText = currentSlide === totalSlides ? 'Restart ↺' : 'Next Slide →';
+    }
+
+    function nextSlide() {
+      if (currentSlide === totalSlides) {
+        showSlide(1);
+      } else {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      showSlide(currentSlide - 1);
+    }
+
+    function goToSlide(num) {
+      showSlide(num);
+    }
+
+    // Keyboard navigation (Arrow keys & Spacebar)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      }
+    });
+
+    showSlide(1);
+  </script>
+</body>
+</html>

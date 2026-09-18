@@ -1,4 +1,4 @@
-﻿import "./styles/claymorphism.css";
+import "./styles/claymorphism.css";
 import "./styles/main.css";
 
 import { renderHeader } from "./components/Header";
@@ -89,7 +89,7 @@ function renderApp() {
       main.appendChild(renderLandingView({ onNavigate: navigateTo }));
       break;
     case "commandCentre":
-      main.appendChild(renderCommandCentreView({ onNavigate: navigateTo }));
+      main.appendChild(renderCommandCentreView({ onNavigate: navigateTo, routeParams }));
       break;
     case "phcDetail":
       main.appendChild(renderPhcDetailView({ initialPhcId: routeParams.phcId, onNavigate: navigateTo }));

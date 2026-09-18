@@ -1,4 +1,4 @@
-﻿import L from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
@@ -9,6 +9,7 @@ import { PHC, RiskLevel } from "../types";
 
 export interface CommandCentreViewProps {
   onNavigate: (route: string, params?: Record<string, string>) => void;
+  routeParams?: Record<string, string>;
 }
 
 export function renderCommandCentreView(props: CommandCentreViewProps): HTMLElement {
@@ -16,11 +17,30 @@ export function renderCommandCentreView(props: CommandCentreViewProps): HTMLElem
   container.className = "page-fade-in";
 
   const dataService = FacilityOperationalDataService.getInstance();
-  const allPhcs = dataService.getPhcs();
+  let allPhcs = dataService.getPhcs();
   const allInventory = dataService.getAllInventory();
   const alerts = dataService.getAlerts();
   const transfers = dataService.getTransfers();
   const tr = t();
+
+  // Apply filters from routeParams
+  if (props.routeParams) {
+    if (props.routeParams.state) {
+      allPhcs = allPhcs.filter(p => p.state === props.routeParams!.state);
+    }
+    if (props.routeParams.district) {
+      allPhcs = allPhcs.filter(p => p.district === props.routeParams!.district);
+    }
+    if (props.routeParams.risk) {
+      allPhcs = allPhcs.filter(p => p.overallRisk === props.routeParams!.risk);
+    }
+    if (props.routeParams.resource) {
+      allPhcs = allPhcs.filter(p => {
+        const inv = dataService.getInventoryByPhc(p.id);
+        return inv.some(i => i.category === props.routeParams!.resource);
+      });
+    }
+  }
 
   // Compute aggregated KPIs
   const totalPhcs = allPhcs.length;
@@ -247,7 +267,7 @@ export function renderCommandCentreView(props: CommandCentreViewProps): HTMLElem
   setTimeout(() => {
     initLeafletMap(container, allPhcs, transfers, props.onNavigate);
     initCharts(container, allPhcs, dataService);
-    initFilters(container, allPhcs, props.onNavigate);
+    initFilters(container, allPhcs, props.onNavigate, props.routeParams);
   }, 100);
 
   return container;
@@ -510,44 +530,39 @@ function initCharts(container: HTMLElement, allPhcs: PHC[], dataService: Facilit
 function initFilters(
   container: HTMLElement,
   allPhcs: PHC[],
-  onNavigate: (route: string, params?: Record<string, string>) => void
+  onNavigate: (route: string, params?: Record<string, string>) => void,
+  routeParams?: Record<string, string>
 ) {
   const stateFilter = container.querySelector("#filter-state") as HTMLSelectElement;
   const districtFilter = container.querySelector("#filter-district") as HTMLSelectElement;
   const riskFilter = container.querySelector("#filter-risk") as HTMLSelectElement;
+  const resourceFilter = container.querySelector("#filter-resource") as HTMLSelectElement;
+
+  if (routeParams) {
+    if (routeParams.state && stateFilter) stateFilter.value = routeParams.state;
+    if (routeParams.district && districtFilter) districtFilter.value = routeParams.district;
+    if (routeParams.risk && riskFilter) riskFilter.value = routeParams.risk;
+    if (routeParams.resource && resourceFilter) resourceFilter.value = routeParams.resource;
+  }
 
   const applyFilters = () => {
-    const selectedState = stateFilter.value;
-    const selectedDistrict = districtFilter.value;
-    const selectedRisk = riskFilter.value;
+    const selectedState = stateFilter?.value || "all";
+    const selectedDistrict = districtFilter?.value || "all";
+    const selectedRisk = riskFilter?.value || "all";
+    const selectedResource = resourceFilter?.value || "all";
 
-    const urgentListContainer = container.querySelector("#urgent-phc-list");
-    if (!urgentListContainer) return;
+    const params: Record<string, string> = {};
+    if (selectedState !== "all") params.state = selectedState;
+    if (selectedDistrict !== "all") params.district = selectedDistrict;
+    if (selectedRisk !== "all") params.risk = selectedRisk;
+    if (selectedResource !== "all") params.resource = selectedResource;
 
-    let filtered = allPhcs;
-    if (selectedState !== "all") {
-      filtered = filtered.filter(p => p.state === selectedState);
-    }
-    if (selectedDistrict !== "all") {
-      filtered = filtered.filter(p => p.district === selectedDistrict);
-    }
-    if (selectedRisk !== "all") {
-      filtered = filtered.filter(p => p.overallRisk === selectedRisk);
-    }
-
-    const dataService = FacilityOperationalDataService.getInstance();
-    urgentListContainer.innerHTML = renderUrgentList(filtered, dataService);
-
-    // Rebind clicks
-    urgentListContainer.querySelectorAll("[data-phc-id]").forEach(item => {
-      item.addEventListener("click", () => {
-        const phcId = (item as HTMLElement).dataset.phcId;
-        if (phcId) onNavigate("phcDetail", { phcId });
-      });
-    });
+    onNavigate("commandCentre", params);
   };
 
   stateFilter?.addEventListener("change", applyFilters);
   districtFilter?.addEventListener("change", applyFilters);
   riskFilter?.addEventListener("change", applyFilters);
+  resourceFilter?.addEventListener("change", applyFilters);
 }
+
