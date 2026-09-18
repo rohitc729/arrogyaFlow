@@ -1,0 +1,279 @@
+﻿:root {
+  /* Pastel backgrounds */
+  --bg-app: #edf3f8;
+  --bg-surface: #f8fafc;
+  --bg-surface-elevated: #ffffff;
+  
+  /* High-contrast accessible deep navy text */
+  --text-main: #0b1c2d;
+  --text-heading: #071524;
+  --text-muted: #4b6279;
+  --text-light: #6a829a;
+
+  /* Medical Theme Clay Colors */
+  --color-blue: #1a6bbf;
+  --color-blue-tint: #e4effb;
+  --color-blue-dark: #0f4987;
+
+  --color-teal: #0d9488;
+  --color-teal-tint: #e0f5f3;
+
+  --color-coral: #e11d48;
+  --color-coral-tint: #ffe4e8;
+  --color-coral-border: #fecdd3;
+
+  --color-amber: #d97706;
+  --color-amber-tint: #fef3c7;
+
+  --color-green: #059669;
+  --color-green-tint: #d1fae5;
+
+  --color-lavender: #6366f1;
+  --color-lavender-tint: #ede9fe;
+
+  /* Clay Shadows and Insets */
+  --clay-shadow-soft: 8px 8px 20px rgba(162, 178, 200, 0.35), -8px -8px 20px rgba(255, 255, 255, 0.95);
+  --clay-shadow-raised: 10px 10px 24px rgba(162, 178, 200, 0.38), -10px -10px 24px rgba(255, 255, 255, 0.95),
+                        inset 2px 2px 3px rgba(255, 255, 255, 0.9), inset -2px -2px 3px rgba(175, 192, 214, 0.25);
+  --clay-shadow-interactive: 6px 6px 14px rgba(162, 178, 200, 0.35), -6px -6px 14px rgba(255, 255, 255, 0.9),
+                             inset 1px 1px 2px rgba(255, 255, 255, 0.9), inset -1px -1px 2px rgba(175, 192, 214, 0.2);
+  --clay-shadow-pressed: inset 4px 4px 8px rgba(162, 178, 200, 0.45), inset -4px -4px 8px rgba(255, 255, 255, 0.95);
+  --clay-shadow-alarm: 0 0 35px rgba(225, 29, 72, 0.45), 10px 10px 28px rgba(162, 178, 200, 0.4), -10px -10px 28px #ffffff;
+
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-pill: 9999px;
+
+  --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+  --transition-smooth: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Clay Card Base */
+.clay-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-raised);
+  padding: 1.5rem;
+  transition: var(--transition-smooth);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.clay-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 12px 12px 28px rgba(155, 172, 195, 0.42), -12px -12px 28px rgba(255, 255, 255, 1),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.9), inset -2px -2px 4px rgba(175, 192, 214, 0.25);
+}
+
+.clay-card-flat {
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--clay-shadow-soft);
+  padding: 1.25rem;
+}
+
+/* Clay Buttons */
+.clay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  background: var(--bg-surface);
+  color: var(--text-heading);
+  box-shadow: var(--clay-shadow-interactive);
+  transition: var(--transition-smooth);
+  text-decoration: none;
+  user-select: none;
+}
+
+.clay-btn:hover {
+  transform: translateY(-2px);
+  color: var(--color-blue);
+}
+
+.clay-btn:active {
+  box-shadow: var(--clay-shadow-pressed);
+  transform: translateY(1px);
+}
+
+.clay-btn-primary {
+  background: var(--color-blue);
+  color: #ffffff !important;
+  box-shadow: 6px 6px 16px rgba(26, 107, 191, 0.35), -4px -4px 12px rgba(255, 255, 255, 0.8),
+              inset 2px 2px 3px rgba(255, 255, 255, 0.4), inset -2px -2px 3px rgba(10, 50, 95, 0.25);
+}
+
+.clay-btn-primary:hover {
+  background: #155ba5;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 20px rgba(26, 107, 191, 0.45), -4px -4px 12px rgba(255, 255, 255, 0.9);
+}
+
+.clay-btn-primary:active {
+  box-shadow: inset 3px 3px 6px rgba(10, 50, 95, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.3);
+}
+
+.clay-btn-danger {
+  background: var(--color-coral);
+  color: #ffffff !important;
+  box-shadow: 6px 6px 16px rgba(225, 29, 72, 0.35), -4px -4px 12px #ffffff,
+              inset 2px 2px 3px rgba(255, 255, 255, 0.4);
+}
+
+.clay-btn-danger:hover {
+  background: #be123c;
+  color: #ffffff !important;
+}
+
+.clay-btn-success {
+  background: var(--color-green);
+  color: #ffffff !important;
+  box-shadow: 6px 6px 16px rgba(5, 150, 105, 0.35), -4px -4px 12px #ffffff;
+}
+
+.clay-btn-success:hover {
+  background: #047857;
+}
+
+/* Clay Inputs */
+.clay-input, .clay-select {
+  font-family: inherit;
+  font-size: 0.92rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(190, 205, 222, 0.4);
+  background: #fdfefe;
+  color: var(--text-main);
+  box-shadow: inset 3px 3px 6px rgba(175, 192, 214, 0.3), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+  transition: var(--transition-smooth);
+  width: 100%;
+}
+
+.clay-input:focus, .clay-select:focus {
+  outline: none;
+  border-color: var(--color-blue);
+  box-shadow: inset 3px 3px 6px rgba(175, 192, 214, 0.4), inset -3px -3px 6px rgba(255, 255, 255, 0.9),
+              0 0 0 3px rgba(26, 107, 191, 0.15);
+}
+
+/* Clay Badges */
+.clay-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 3px 3px 8px rgba(162, 178, 200, 0.25), -3px -3px 8px #ffffff;
+}
+
+.clay-badge-stable {
+  background: var(--color-green-tint);
+  color: var(--color-green);
+  border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+.clay-badge-moderate {
+  background: var(--color-amber-tint);
+  color: var(--color-amber);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+.clay-badge-critical {
+  background: var(--color-coral-tint);
+  color: var(--color-coral);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  animation: pulse-coral 2s infinite ease-in-out;
+}
+
+.clay-badge-info {
+  background: var(--color-blue-tint);
+  color: var(--color-blue);
+  border: 1px solid rgba(26, 107, 191, 0.2);
+}
+
+@keyframes pulse-coral {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* Alarm Pulse Animation */
+@keyframes alarm-flash {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(225, 29, 72, 0.3), 10px 10px 28px rgba(162, 178, 200, 0.4), -10px -10px 28px #ffffff;
+  }
+  50% {
+    box-shadow: 0 0 45px rgba(225, 29, 72, 0.65), 10px 10px 28px rgba(162, 178, 200, 0.4), -10px -10px 28px #ffffff;
+  }
+}
+
+.alarm-active {
+  animation: alarm-flash 1.6s infinite ease-in-out;
+}
+
+/* Skeleton Loading Effect */
+.skeleton {
+  background: linear-gradient(90deg, #e7edf5 25%, #f4f8fc 50%, #e7edf5 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Page Transitions */
+.page-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 28, 45, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease-out;
+}
